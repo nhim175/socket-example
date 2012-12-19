@@ -1,0 +1,39 @@
+<html>
+<head>
+    <style type="text/css">
+        body, input {
+            font-family: Droid Sans Mono, serif;
+            font-size: 11px;
+        }
+        #chatbox {
+            border: 1px solid #BBB;
+        }
+    </style>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    var socket = io.connect('http://localhost');
+    socket.on('connect', function() {
+        socket.emit('set nickname', prompt('Enter your nickname'));
+        socket.on('ready', function() {
+            $('#status').append('You are connected!');
+        });
+        socket.on('user connected', function(data) {
+            $('#status').append('<p>'+data.msg+'</p>');
+        });
+    });
+    </script>
+</head>
+<body>
+<div id="chatbox">
+    <p>This is a comment!</p>
+</div>
+<div id="status">
+</div>
+<div id="input">
+    <input type="text" id="txt" />
+</div>
+</body>
+</html>
+
+
